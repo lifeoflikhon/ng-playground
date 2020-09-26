@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "ng-playground"
+    }
+  },
+  "defaultProject": "ng-playground",
+  "cli": {
+    "analytics": false
+  }
 }

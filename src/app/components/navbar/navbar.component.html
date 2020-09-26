@@ -1,0 +1,7 @@
+<div class="navbar">
+  <div class="navbar__items">
+    <div class="navbar__items__item" *ngFor="let item of items" routerLink="{{item.link}}">
+      <p class="navbar__items__item__link">{{item.name}}</p>
+    </div>
+  </div>
+</div>

@@ -3,12 +3,12 @@
   <form class="wf-process__header">
     <div class="wf-process__header__comment">
       <label for="reviewerComment">
-        <textarea id="reviewerComment" class="wf-process__header__comment__input" placeholder="Write a comment..." required></textarea>
+        <textarea id="reviewerComment" class="wf-process__header__comment__input" placeholder="Write a comment..." required (change)="setComment($event)"></textarea>
       </label>
     </div>
     <div class="wf-process__header__comment__buttons">
-      <button class="wf-process__header__comment__buttons__button bg-yellow" type="submit">backward</button>
-      <button class="wf-process__header__comment__buttons__button bg-green" type="submit">forward</button>
+      <button class="wf-process__header__comment__buttons__button bg-yellow" type="submit" (click)="getComment($event)">backward</button>
+      <button class="wf-process__header__comment__buttons__button bg-green" type="submit" (click)="getComment($event)">forward</button>
       <button class="wf-process__header__comment__buttons__button bg-red" type="reset">cancel</button>
     </div>
     <div class="wf-process__header__divider"></div>
@@ -16,43 +16,24 @@
 
   <div class="wf-process__body">
     <div class="wf-process__body__stages">
-      <div class="wf-process__body__stages__stage">
+      <div class="wf-process__body__stages__stage" *ngFor="let stage of stages; index as i" >
 
-        <p class="wf-process__body__stages__stage__serial">1</p>
+        <p class="wf-process__body__stages__stage__serial" [style.border-color]="getColor(stage)">{{i + 1}}</p>
 
         <div class="wf-process__body__stages__stage__status">
-          <p class="wf-process__body__stages__stage__status__number">2 of 3</p>
-          <p class="wf-process__body__stages__stage__status__string">Approved</p>
+          <p class="wf-process__body__stages__stage__status__number">{{approvedReviewers[i]}} of {{stage.requiredReviewer}}</p>
+          <p class="wf-process__body__stages__stage__status__string {{getClass(stage)}}">{{getClass(stage)}}</p>
         </div>
 
         <div class="wf-process__body__stages__stage__comments">
-          <div class="wf-process__body__stages__stage__comments__comment">
-              <img class="wf-process__body__stages__stage__comments__comment__avatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1600&q=80" alt="avatar"/>
+          <div class="wf-process__body__stages__stage__comments__comment" *ngFor="let reviewer of stage.reviewers">
+              <img class="wf-process__body__stages__stage__comments__comment__avatar" [style.border-color]="getColor(reviewer)" [src]="reviewer.avatar" alt="avatar"/>
               <div class="wf-process__body__stages__stage__comments__comment__item">
-                <p class="wf-process__body__stages__stage__comments__comment__item__comment">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, inventore.</p>
+                <p class="wf-process__body__stages__stage__comments__comment__item__name">{{reviewer.name}}</p>
+                <p class="wf-process__body__stages__stage__comments__comment__item__comment" [style.opacity]="reviewer.status === undefined ? '0.5' : '1'">{{reviewer.status === undefined ? 'waiting...' : reviewer.comment}}</p>
                 <div class="wf-process__body__stages__stage__comments__comment__item__bottom">
-                  <p class="wf-process__body__stages__stage__comments__comment__item__bottom__timestamp">12/09/2020 10:08AM</p>
-                  <p class="wf-process__body__stages__stage__comments__comment__item__bottom__status">Approved</p>
-                </div>
-              </div>
-          </div>
-          <div class="wf-process__body__stages__stage__comments__comment">
-              <img class="wf-process__body__stages__stage__comments__comment__avatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1600&q=80" alt="avatar"/>
-              <div class="wf-process__body__stages__stage__comments__comment__item">
-                <p class="wf-process__body__stages__stage__comments__comment__item__comment">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, inventore.</p>
-                <div class="wf-process__body__stages__stage__comments__comment__item__bottom">
-                  <p class="wf-process__body__stages__stage__comments__comment__item__bottom__timestamp">12/09/2020 10:08AM</p>
-                  <p class="wf-process__body__stages__stage__comments__comment__item__bottom__status">Approved</p>
-                </div>
-              </div>
-          </div>
-          <div class="wf-process__body__stages__stage__comments__comment">
-              <img class="wf-process__body__stages__stage__comments__comment__avatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1600&q=80" alt="avatar"/>
-              <div class="wf-process__body__stages__stage__comments__comment__item">
-                <p class="wf-process__body__stages__stage__comments__comment__item__comment">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, inventore.</p>
-                <div class="wf-process__body__stages__stage__comments__comment__item__bottom">
-                  <p class="wf-process__body__stages__stage__comments__comment__item__bottom__timestamp">12/09/2020 10:08AM</p>
-                  <p class="wf-process__body__stages__stage__comments__comment__item__bottom__status">Approved</p>
+                  <p class="wf-process__body__stages__stage__comments__comment__item__bottom__timestamp">{{reviewer.status === undefined ? 'waiting...' :reviewer.timestamp}}</p>
+                  <p class="wf-process__body__stages__stage__comments__comment__item__bottom__status {{getClass(reviewer)}}">{{getClass(reviewer)}}</p>
                 </div>
               </div>
           </div>

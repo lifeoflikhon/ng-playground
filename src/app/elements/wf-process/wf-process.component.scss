@@ -26,6 +26,19 @@
     transition: background-color 0.3s linear;
   }
 }
+
+.rejected {
+  background-color: darkred;
+}
+
+.approved {
+  background-color: green;
+}
+
+.pending {
+  background-color: #003d69;
+}
+
 .bg-red {
   background-color: transparent;
   color: #000000;
@@ -86,7 +99,7 @@
 
         &__button {
           padding: 5px 10px;
-          border-radius: 0;
+          border-radius: 3px;
           border: 0;
           text-transform: capitalize;
 
@@ -136,9 +149,20 @@
         display: flex;
         flex-direction: column;
         position: relative;
+        border-radius: 3px;
 
         &:not(:last-child) {
           margin-bottom: 30px;
+
+          &::before {
+            content: '';
+            position: absolute;
+            width: 3px;
+            height: 120%;
+            background-color: #837d7d;
+            top: -15px;
+            left: 0;
+          }
         }
 
         &__serial {
@@ -148,7 +172,7 @@
           background-color: #ffffff;
           padding: 10px 15px;
           border-radius: 1000px;
-          border: 4px solid green;
+          border: 4px solid;
         }
 
         &__status {
@@ -165,32 +189,47 @@
 
           &__number {
             background-color: #003d69;
+            border-radius: 3px 0 0 3px;
           }
 
           &__string {
-            background-color: green;
+            border-radius: 0 3px 3px 0;
           }
         }
 
         &__comments {
+          padding-left: 10px;
+
           &__comment {
             display: flex;
             padding: 5px;
+
             &:not(:last-child) {
               margin-bottom: 5px;
             }
+
             &__avatar {
               width: 30px;
               height: 30px;
               border-radius: 50%;
               margin-right: 10px;
-              border: 3px solid green;
+              border: 3px solid;
             }
 
             &__item {
               background-color: #ffffff;
               padding: 5px;
-              box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
+              border-radius: 3px;
+              width: 100%;
+
+              &__name {
+                font-size: 12px;
+                color: #003d69;
+                margin-bottom: 10px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                font-weight: 300;
+              }
 
               &__comment {
                 font-size: 12px;
@@ -211,9 +250,10 @@
                 }
 
                 &__status {
-                  background-color: green;
                   padding: 2px;
                   color: white;
+                  border-radius: 3px;
+                  margin: 0 -5px -5px 0;
                 }
               }
             }

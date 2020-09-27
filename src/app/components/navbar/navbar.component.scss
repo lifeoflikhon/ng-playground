@@ -5,6 +5,7 @@ $border-radius: 3px;
 .navbar {
   background-color: $color-bg;
   border-radius: $border-radius;
+  margin-bottom: 20px;
   &__items {
     display: flex;
     align-items: stretch;
